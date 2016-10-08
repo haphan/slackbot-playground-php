@@ -31,7 +31,8 @@
         "flow/jsonpath": "^0.3.4",
         "logentries/logentries": "^1.6",
         "maknz/slack": "^1.7",
-        "mtdowling/jmespath.php": "^2.3"
+        "mtdowling/jmespath.php": "^2.3",
+        "csa/guzzle-bundle": "^2.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
