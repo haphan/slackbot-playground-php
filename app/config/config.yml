@@ -67,3 +67,13 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+
+csa_guzzle:
+    profiler: %kernel.debug%
+    logger:
+      enabled: true
+      service: ~
+      format: '{method} {uri} {code}'
+      #format: 'debug'
+      level: debug
