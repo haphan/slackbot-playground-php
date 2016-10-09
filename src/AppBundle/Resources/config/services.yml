@@ -1,4 +1,23 @@
 services:
-    app.scrappers.carousell:
-        class: AppBundle\Scrappers\Carousell
-        arguments: ['@logger']
+  app.bot.carousell:
+    class: AppBundle\Bot\CarousellBot
+    arguments: ['@app.sdk.carousell']
+
+  app.sdk.carousell:
+    class: AppBundle\SDK\CarousellSDK
+    arguments: ['@app.sdk.carousell.client', '@logger']
+
+  app.sdk.carousell.client:
+    public: false
+    class: GuzzleHttp\Client
+    tags:
+        - {name: 'csa_guzzle.client'}
+    arguments:
+      - timeout: 20
+        connect_timeout: 5
+        base_uri: 'https://api.carousell.com/api/2.1/'
+        headers:
+          Accept: 'application/json'
+          User-Agent: 'Carousell/293 (iPhone; iOS 9.0.2; Scale/2.00)'
+          Accept-Language: 'en-SG;q=1, en-US;q=0.9'
+          Cookie: '__cfduid=d91ca820795882cd9e8062451f6a3766a1470134556; _ga=GA1.2.1001514378.1444717158; amplitude_idcarousell.com=eyJkZXZpY2VJZCI6IjVjNzMxOGY1LTY2YWItNDcwZS05ZGNkLTgwYTFkZTkxYWY2NyIsInVzZXJJZCI6bnVsbCwib3B0T3V0IjpmYWxzZX0='
