@@ -23,11 +23,12 @@ class CarousellBot
     {
         $result =  $this->sdk->products($condition);
 
-        if(!is_array($result) || !isset($result['products']) || empty($result['products']))
+        if(!is_array($result) || !isset($result['products']) || empty($result['products']) || $result['no_result'])
         {
             return [];
         }
 
-        return $result['products'];
+        return \JmesPath\Env::search('[*].{id: id, title: title,description: description, price: price, photo: primary_photo_url}', $result['products']);
+
     }
 }

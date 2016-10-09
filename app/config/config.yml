@@ -77,3 +77,6 @@ csa_guzzle:
       format: '{method} {uri} {code}'
       #format: 'debug'
       level: debug
+
+cl_slack:
+    api_token: xoxb-87013132945-cGxmK7T4N7CCTXpDnmeAhQwE

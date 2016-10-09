@@ -4,6 +4,7 @@ namespace AppBundle\Command;
 
 use AppBundle\Bot\CarousellBot;
 use AppBundle\SDK\CarousellSDK;
+use CL\Slack\Payload\ChatPostMessagePayload;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,8 +33,22 @@ class SlackbotRunCommand extends ContainerAwareCommand
         ]);
 
 
-        VarDumper::dump($result);
+        $product = current($result);
 
+        $message = new ChatPostMessagePayload();
+        $message->setChannel('hotdeals');
+        $message->setUnfurlLinks(true);
+        $message->setUnfurlMedia(true);
+        //$message->setParse()
+        //$message->setAsUser(true);
+        //$message->setUsername('carousell');
+        //$message->setText(sprintf('*$%s* %s. See https://carousell.com/p/%d', $product['price'], $product['title'], $product['id']));
+        $message->setText(sprintf('https://carousell.com/p/%d', $product['id']));
+        //$message->setIconUrl($product['photo']);
+
+        $response = $this->getSlackClient()->send($message);
+
+        $output->writeln($message->getText());
     }
 
     /**
@@ -50,5 +65,10 @@ class SlackbotRunCommand extends ContainerAwareCommand
     private function getCarousellBot()
     {
         return $this->getContainer()->get('app.bot.carousell');
+    }
+
+    private function getSlackClient()
+    {
+        return $this->getContainer()->get('cl_slack.api_client');
     }
 }
